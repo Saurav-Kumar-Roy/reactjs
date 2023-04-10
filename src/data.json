@@ -1,7 +1,0 @@
-{
- "tasks":[
-    {"title":"task1","details":"this is task1","completed":true,"id":1},
-    {"title":"task2","details":"this is task2","completed":false,"id":3},
-    {"title":"task3","details":"this is task3","completed":true,"id":2}
-]
-}

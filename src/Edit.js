@@ -1,20 +1,25 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import useFetch from "./useFetch";
 
-const Create = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [isDone, setisDone] = useState(false);
-  const history = useHistory();
+const Edit = () => {
+    const { id } = useParams();
+    const { data: task, error, isPending } = useFetch('http://localhost:8000/tasks/' + id);
+    const history = useHistory();
+
+    const [title, setTitle] = useState(task.title);
+    const [body, setBody] = useState(task.body);
+    const [isDone, setisDone] = useState(task.isDone);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const blog = { title, body, isDone };
+    const task = { title, body, isDone, id };
 
     fetch('http://localhost:8000/tasks/', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blog)
+      body: JSON.stringify(task)
     }).then(() => {
       // history.go(-1);
       history.push('/');
@@ -46,10 +51,10 @@ const Create = () => {
           <option value={false}>pending</option>
           <option value={true}>done</option>
         </select>
-        <button>Add</button>
+        <button>Done</button>
       </form>
     </div>
   );
 }
  
-export default Create;
+export default Edit;
